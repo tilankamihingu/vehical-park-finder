@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -37,6 +38,11 @@ public class ParkController {
         Park park = parkRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Park not exist with id:" + id));
         return ResponseEntity.ok(park);
+    }
+
+    @GetMapping("/park")
+    public List<Park> findByName(@RequestParam Optional<String> name){
+        return parkRepository.findByName(name.orElse(""));
     }
 
     //update park rest api
